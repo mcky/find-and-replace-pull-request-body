@@ -18,12 +18,13 @@ const octokitMock = {
   rest: {
     pulls: {
       update: jest.fn(),
+      get: jest.fn(),
     },
   },
 }
 
 describe('utils', () => {
-  beforeAll(() => {
+  beforeEach(() => {
     jest.spyOn(core, 'getInput').mockImplementation(name => {
       return INPUTS[name]
     })
@@ -60,7 +61,7 @@ describe('utils', () => {
     INPUTS.isHtmlCommentTag = 'true'
     INPUTS.replace = 'https://example.org'
 
-    run()
+    await run()
 
     const expectedNextPullRequestBody = cleanMultilineText(`
       ## Related Pull Requests & Issues
